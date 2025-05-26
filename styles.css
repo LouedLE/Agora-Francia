@@ -53,3 +53,16 @@ nav ul {
   border: 0;
   max-width: 400px;   /* Limite la largeur max de la carte */
 }
+
+.selection {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 50px;
+  padding: 10px;
+}
+
+.image-selection img {
+  width: 250px;   /* ou toute autre taille adaptée */
+  height: 250px;  /* même hauteur pour l'homogénéité */
+}
