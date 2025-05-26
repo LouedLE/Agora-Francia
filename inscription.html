@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <script>
+        
+        function ajouter() {
+            var xhttp = new XMLHttpRequest();
+            var formData = new FormData(document.forms[0]);
+            xhttp.onreadystatechange = function() { 
+                if (this.readyState == 4 && this.status == 200) { 
+                    document.getElementById("signup").innerHTML = this.responseText;
+                } 
+            }; 
+            xhttp.open("POST", "signup.php", true); 
+            xhttp.send(formData);
+        }
+    </script>
+</head>
+<body>
+    <h1>Sign up</h1>
+    
+    <form method="post" id="tg">
+        <table>
+            <tr>
+                <td>Qui êtes vous ?</td>
+                <td><select type="text" name="role" required>
+                    <option value="client">Client/Acheteur</option>
+                    <option value="vendeur">vendeur</option>
+                </select></td>
+            </tr>
+            <tr>
+                <td>Pseudo</td>
+                <td><input type="text" name="pseudo" required></td>
+            </tr>
+            <tr>
+                <td>Nom</td>
+                <td><input type="text" name="nom" required></td>
+            </tr>
+            <tr>
+                <td>Prenom</td>
+                <td>
+                <input type="text" name="prenom" required></td>
+            </tr>
+            <tr>
+                <td>Mail</td>
+                <td><input type="text" name="mail" required></td>
+            </tr>
+            <tr>
+                <td>Mot de passe</td>
+                <td><input type="password" name="mdp" required></td>
+            </tr>
+            <tr>
+                <td><input type="button" onclick="ajouter()" value="Créer"></td>
+            </tr>
+        </table>
+    </form>
+    <div id="signup"></div>
+</body>
+</html>

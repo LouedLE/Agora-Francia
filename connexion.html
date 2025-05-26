@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in</title>
+    <script>
+        
+        function coo() {
+            var xhttp = new XMLHttpRequest();
+            var formData = new FormData(document.forms[0]);
+            xhttp.onreadystatechange = function() { 
+                if (this.readyState == 4 && this.status == 200) { 
+                    document.getElementById("tg").innerHTML = this.responseText;
+                } 
+            }; 
+            xhttp.open("POST", "signin.php", true); 
+            xhttp.send(formData);
+        }
+    </script>
+</head>
+<body>
+    <h1>Sign up</h1>
+    
+    <form method="post" id="login">
+        <table>
+            <tr>
+                <td>Qui êtes vous ?</td>
+                <td><select type="text" name="role" required>
+                    <option value="client">Client/Acheteur</option>
+                    <option value="vendeur">vendeur</option>
+                </select></td>
+            </tr>
+            <tr>
+                <td>Pseudo</td>
+                <td><input type="text" name="pseudo" required></td>
+            </tr>
+            <tr>
+                <td>Mot de passe</td>
+                <td><input type="password" name="mdp" required></td>
+            </tr>
+            <tr>
+                <td><input type="button" onclick="coo()" value="Connexion"></td>
+            </tr>
+        </table>
+    </form>
+    <div id="tg"></div>
+</body>
+</html>
