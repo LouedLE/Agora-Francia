@@ -1,0 +1,55 @@
+.logo {
+  width: 150px;
+  height: auto;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  background-color: #A7D08C;
+}
+
+nav {
+  background-color: #A7D08C; 
+}
+
+nav ul {
+  display: flex;      
+  list-style: none;    
+  justify-content: center
+  padding: 20px;
+  margin: 0;
+  gap: 150px;           
+  font-size: 20px;
+}
+
+.container {
+    text-align: center; /* Centre le contenu du conteneur */
+}
+
+.carousel {
+    display: inline-block; /* Permet au carrousel de s'adapter à la taille de son contenu */
+    margin: auto; /* Centre le carrousel horizontalement */
+    width: 35%; /* Ajustez cette valeur pour augmenter la largeur du carrousel */
+}
+
+.carousel-inner img {
+    width: 100%; /* Permet à l'image de s'adapter à la largeur du conteneur */
+    height: auto; /* Conserve la proportion de hauteur de l'image */
+    max-width: 100%; /* Assure que l'image ne dépasse pas la largeur du conteneur */
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px;
+  background-color: #A7D08C;
+}
+
+.footer-map iframe {
+  width: 100%;        /* S'adapte à la largeur du conteneur */
+  height: 200px;      /* Réduit la hauteur de la carte */
+  border: 0;
+  max-width: 400px;   /* Limite la largeur max de la carte */
+}
