@@ -54,7 +54,10 @@ $stmt->close();
     <br>
 
     <div class="article-details">
-        <p>Prix à payer : <strong><?php echo htmlspecialchars($article['prix']); ?> €</strong></p>
+        <p>Prix à payer : <strong><?php 
+        if (isset($article['prix']))
+        {echo htmlspecialchars($article['prix']);}
+         ?> €</strong></p>
     </div>
 
     <form method="post" action="achat_immediat.php">
@@ -138,6 +141,7 @@ $stmt->close();
             $stmt_delete->bind_param("i", $article_id);
             if ($stmt_delete->execute()) {
                 echo "<p>Commande passée avec succès. L'article a été supprimé de la base de données.</p>";
+                exit;
             } else {
                 echo "<p>Erreur lors de la suppression de l'article : " . $stmt_delete->error . "</p>";
             }

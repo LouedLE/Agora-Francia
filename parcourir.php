@@ -1,3 +1,6 @@
+<?php
+require_once 'redirect.php';
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,30 +14,22 @@
 	<link rel="icon" href="images/logo.png" type="image/png">
 </head>
 <body>
-	<div class="header">
+<div class="header">
 		<img src="images/logo.png" alt="logo" class="logo">
 		<h1>Agora Francia</h1>
-		<nav>
-			<ul>
-				<li><a href="index.html">Accueil</a></li>
-				<li><a href="parcourir.php">Tout parcourir</a></li>
-				<li><a href="notifications.html">notifications</a></li>
-				<li><a href="panier.html">panier</a></li>
-				<li><a href="compte.html">votre compte</a></li>
-			</ul>
-		</nav>
+	<nav>
+		<ul>
+			<li><a href="index.php">Accueil</a></li>
+			<li><a href="parcourir.php">Tout parcourir</a></li>
+			<li><a href="notifications.php">notifications</a></li>
+			<li><a href="panier.php">panier</a></li>
+			<li><a href="compte.php">votre compte</a></li>
+			<li><a href="logout.php">Se deconnecter</a></li>
+		</ul>
+	</nav>
 	</div>
-
-	<br>
-	<?php
-$database = "agora";
-
-// Connexion à la base de données
-$db_handle = mysqli_connect('localhost', 'root', '', $database);
-
-if (!$db_handle) {
-    die("Erreur de connexion : " . mysqli_connect_error());
-}
+<?php
+$db_handle = require __DIR__ . "/coDbb.php";
 
 $sql = "SELECT * FROM articles";
 $result = mysqli_query($db_handle, $sql);
@@ -65,9 +60,9 @@ foreach ($types as $rarete => $titre) {
             echo "<p>{$article['description']}</p>";
             echo "<p><strong>{$article['prix']} €</strong></p>";
 
-            if ($article['typeAchat'] === 'achat immédiat') {
+            if ($article['typeAchat'] === 'achatDirect') {
                 echo "<a href='achat_immediat.php?id={$article['ID']}'>Acheter maintenant</a>";
-            } elseif ($article['typeAchat'] === 'meilleure offre') {
+            } elseif ($article['typeAchat'] === 'enchere') {
                 echo "<a href='enchere.php?id={$article['ID']}'>Faire une offre</a>";
             } elseif ($article['typeAchat'] === 'transaction') {
                 echo "<a href='negociation.php?id={$article['ID']}'>Négocier</a>";
@@ -81,7 +76,7 @@ foreach ($types as $rarete => $titre) {
 
 mysqli_close($db_handle);
 ?>
-
+<br>
 
 	<div class="footer">
 		<div class="footer-content">

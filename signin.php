@@ -1,15 +1,5 @@
 <?php
-$database = "agora";
-$db_handle = mysqli_connect('localhost', 'root', '');
-$db_found = mysqli_select_db($db_handle, $database);
-
-if (!$db_handle) {
-    die("Connection failed: " . mysqli_connect_error());
-}
-
-if (!$db_found) {
-    die("Database not found");
-}
+$db_handle = require __DIR__ . "/coDbb.php";
 
 $table = mysqli_real_escape_string($db_handle, $_POST['role']);
 
@@ -31,6 +21,7 @@ if (mysqli_num_rows($result) > 0) {
 
     
     $_SESSION["user_id"] = $user["ID"];
+    $_SESSION["user_table"] = $table;
     
     echo "<a href='index.php'>Vers l'Agora</a>";
 }else{

@@ -10,18 +10,16 @@
 </head>
 <body>
     <h1>Créer un nouvel article</h1>
-    <form action="nvArticle.php" method="post">
+    <form action="nvArticle.php" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="nom">Nom de l'article*</label>
             <input type="text" id="nom" name="nom" required>
         </div>
 
         <div class="form-group">
-            <label for="image">URL Image</label>
-            <input type="text" id="image" name="image" required>
-            <!--
-            <input type="file" id="image" name="image" accept="image/*">
-            -->
+            <label for="image">Fichier de l'image (PAS PLUS DE 2 Mo)</label>
+            <!-- <input type="text" id="image" name="image" required> -->
+            <input type="file" id="image" name="image" accept="image/*" required>
         </div>
 
         <div class="form-group">
@@ -37,18 +35,27 @@
         <div class="form-group">
             <label for="rarete">Rareté*</label>
             <select id="rarete" name="rarete" required>
-                <option value="Rares">Articles rares</option>
-                <option value="Hautdegamme">Article haut de gamme</option>
-                <option value="Regulier">Articles réguliers</option>
+                <option value="rare">Articles rares</option>
+                <option value="haut_de_gamme">Article haut de gamme</option>
+                <option value="regulier">Articles réguliers</option>
             </select>
         </div>
 
         <div class="form-group">
-            <label for="type">Type*</label>
+            <label for="type">Type d'article*</label>
             <select id="type" name="type" required>
                 <option value="Meubles">Meubles et objets d’art</option>
                 <option value="VIP">Accessoire VIP</option>
-                <option value="Materiels">Matériels scolaires</option>
+                <option value="MaterielsScolaires">Matériels scolaires</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="typeAchat">Méthode d'achat*</label>
+            <select id="typeAchat" name="typeAchat" required>
+                <option value="achatDirect">achat immédiat</option>
+                <option value="enchere">enchère</option>
+                <option value="transaction">transaction</option>
             </select>
         </div>
 
