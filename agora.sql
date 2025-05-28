@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mar. 27 mai 2025 à 14:59
--- Version du serveur : 9.1.0
--- Version de PHP : 8.3.14
+-- Généré le : mer. 28 mai 2025 à 08:19
+-- Version du serveur : 8.3.0
+-- Version de PHP : 8.2.18
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -46,27 +46,29 @@ INSERT INTO `admin` (`ID`, `Pseudo`, `Mail`, `Mdp`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `article`
+-- Structure de la table `articles`
 --
 
-DROP TABLE IF EXISTS `article`;
-CREATE TABLE IF NOT EXISTS `article` (
-  `ID` int NOT NULL AUTO_INCREMENT,
-  `Nom` varchar(255) NOT NULL,
-  `Image` varchar(255) NOT NULL,
-  `Desc` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `Prix` float NOT NULL,
-  `Rarete` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `Type` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+DROP TABLE IF EXISTS `articles`;
+CREATE TABLE IF NOT EXISTS `articles` (
+  `ID` int NOT NULL,
+  `nom` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `prix` float NOT NULL,
+  `rarete` varchar(255) NOT NULL,
+  `typeAchat` varchar(255) NOT NULL,
+  `Photo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=111 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Déchargement des données de la table `article`
+-- Déchargement des données de la table `articles`
 --
 
-INSERT INTO `article` (`ID`, `Nom`, `Image`, `Desc`, `Prix`, `Rarete`, `Type`) VALUES
-(110, 'caca', 'caca', 'aca', 0.02, 'Hautdegamme', 'VIP');
+INSERT INTO `articles` (`ID`, `nom`, `description`, `prix`, `rarete`, `typeAchat`, `Photo`) VALUES
+(1, 'montre', 'montre', 30000, 'haut_de_gamme', 'achat immédiat', 'images/rolex.jpg'),
+(2, 'confiture', 'confiture', 300, 'regulier', 'meilleur offre', 'Images/confiture.jpg'),
+(3, 'Piece JO', 'Piece JO', 251652000000, 'rare', 'transaction', 'images/pieceJO.jpg');
 
 -- --------------------------------------------------------
 
@@ -83,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `client` (
   `Mail` varchar(255) NOT NULL,
   `Mdp` varchar(255) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=114 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=115 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `client`
@@ -93,7 +95,8 @@ INSERT INTO `client` (`ID`, `Pseudo`, `Nom`, `Prenom`, `Mail`, `Mdp`) VALUES
 (110, 'tg', 'tg', 'tg', 'tg', 'tg'),
 (111, 'azds', 'azd', 'azd', 'adz', 'azecf'),
 (112, 'azds', 'azd', 'azd', 'adz', 'sEDVC'),
-(113, 'tg', 'tg', 'tg', 'tg', 'tg');
+(113, 'tg', 'tg', 'tg', 'tg', 'tg'),
+(114, 'Loued', 'de Penguilly', 'Louis-Edouard', 'ledepenguilly@gmail.com', '1234');
 
 -- --------------------------------------------------------
 
