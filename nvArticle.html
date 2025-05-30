@@ -4,62 +4,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+	<link rel="stylesheet" href="styleProfil.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <title>Création d'article</title>
+    <script>
+    function enchereInputShow() {
+        var typeAchat = document.getElementById("typeAchat");
+        var datetimeContainer = document.getElementById("datetimeContainer");
+
+        if (typeAchat.value === "enchere") {
+            datetimeContainer.style.display = "block";
+        } else {
+            datetimeContainer.style.display = "none";
+        }
+    }
+    </script>
     
 </head>
 <body>
     <h1>Créer un nouvel article</h1>
-    <form action="nvArticle.php" method="post" enctype="multipart/form-data">
-        <div class="form-group">
-            <label for="nom">Nom de l'article*</label>
-            <input type="text" id="nom" name="nom" required>
-        </div>
+    <div >
+        <form action="nvArticle.php" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="nom">Nom de l'article*</label>
+                <input type="text" id="nom" name="nom" required>
+            </div>
 
-        <div class="form-group">
-            <label for="image">Fichier de l'image (PAS PLUS DE 2 Mo)</label>
-            <!-- <input type="text" id="image" name="image" required> -->
-            <input type="file" id="image" name="image" accept="image/*" required>
-        </div>
+            <div class="form-group">
+                <label for="image">Fichier de l'image (PAS PLUS DE 2 Mo)</label>
+                <!-- <input type="text" id="image" name="image" required> -->
+                <input type="file" id="image" name="image" accept="image/*" required>
+            </div>
 
-        <div class="form-group">
-            <label for="desc">Description*</label>
-            <textarea id="desc" name="desc" rows="4" required></textarea>
-        </div>
+            <div class="form-group">
+                <label for="desc">Description*</label>
+                <textarea id="desc" name="desc" rows="4" required></textarea>
+            </div>
 
-        <div class="form-group">
-            <label for="prix">Prix*</label>
-            <input type="number" id="prix" name="prix" step="0.01" min="0" required>
-        </div>
+            <div class="form-group">
+                <label for="prix">Prix*</label>
+                <input type="number" id="prix" name="prix" step="0.1" min="0" required>
+            </div>
 
-        <div class="form-group">
-            <label for="rarete">Rareté*</label>
-            <select id="rarete" name="rarete" required>
-                <option value="rare">Articles rares</option>
-                <option value="haut_de_gamme">Article haut de gamme</option>
-                <option value="regulier">Articles réguliers</option>
-            </select>
-        </div>
+            <div class="form-group">
+                <label for="rarete">Rareté*</label>
+                <select id="rarete" name="rarete" required>
+                    <option value="rare">Articles rares</option>
+                    <option value="haut_de_gamme">Article haut de gamme</option>
+                    <option value="regulier">Articles réguliers</option>
+                </select>
+            </div>
 
-        <div class="form-group">
-            <label for="type">Type d'article*</label>
-            <select id="type" name="type" required>
-                <option value="Meubles">Meubles et objets d’art</option>
-                <option value="VIP">Accessoire VIP</option>
-                <option value="MaterielsScolaires">Matériels scolaires</option>
-            </select>
-        </div>
+            <div>
+                <label class="detail-label" for="type">Type d'article*</label>
+                <select class="detail-label" id="type" name="type" required>
+                    <option value="Meubles">Meubles et objets d’art</option>
+                    <option value="VIP">Accessoire VIP</option>
+                    <option value="MaterielsScolaires">Matériels scolaires</option>
+                </select>
+            </div>
 
-        <div class="form-group">
-            <label for="typeAchat">Méthode d'achat*</label>
-            <select id="typeAchat" name="typeAchat" required>
-                <option value="achatDirect">achat immédiat</option>
-                <option value="enchere">enchère</option>
-                <option value="transaction">transaction</option>
-            </select>
-        </div>
+            <div>
+                <label for="typeAchat">Méthode d'achat*</label>
+                <select id="typeAchat" name="typeAchat" required onchange="enchereInputShow()">
+                    <option value="achatDirect">achat immédiat</option>
+                    <option value="enchere">enchère</option>
+                    <option value="transaction">transaction</option>
+                </select>
+            </div>
 
-        <button type="submit">Créer l'article</button>
-    </form>
+            <div id="datetimeContainer" style="display: none;">
+                <label for="dateFin">Date et heure de fin de l'enchère*</label>
+                <input type="datetime-local" id="dateFin" name="dateFin">
+            </div>
+            <button class="change-bg-btn" type="submit">Créer l'article</button>
+        </form>
+    </div>
 </body>
 </html>

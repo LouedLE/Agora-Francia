@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+	<link rel="stylesheet" href="styleProfil.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <title>Profil</title>
+    
+</head>
+<body>
+    <h1>Changer de fond d'écran de profil</h1>
+    <div >
+        <form action="imgFond.php" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="image">Fichier de l'image (PAS PLUS DE 2 Mo)</label>
+                <!-- <input type="text" id="image" name="image" required> -->
+                <input type="file" id="image" name="image" accept="image/*" required>
+            </div>
+            <button class="change-bg-btn" type="submit">Mettre à jour l'image</button>
+        </form>
+    </div>
+</body>
+</html>

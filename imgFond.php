@@ -9,7 +9,7 @@ if(!isset($_FILES['image'])){
 
 if(isset($_FILES['image'])){
 // Dossier de destination pour les uploads
-    $uploadDir = 'imgArticle/';
+    $uploadDir = 'imgFondProfil/';
     // Créer le dossier s'il n'existe pas
     if (!file_exists($uploadDir)) {
         mkdir($uploadDir, 0777, true);
@@ -21,6 +21,7 @@ if(isset($_FILES['image'])){
     $fileSize = $_FILES['image']['size'];
     $fileError = $_FILES['image']['error'];
     $fileType = $_FILES['image']['type'];
+    echo $fileName.$fileTmpName.$fileSize.$fileError.$fileType;
 
     // Extraire l'extension du fichier
     $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
@@ -58,51 +59,29 @@ if(isset($_FILES['image'])){
         exit;
     }
 }
-$nomA =  mysqli_real_escape_string($db_handle, $_POST['nom']);
-//$image = mysqli_real_escape_string($db_handle, $_POST['image']);
-$desc = mysqli_real_escape_string($db_handle, $_POST['desc']);
-$prix = isset($_POST['prix']) ? (float)$_POST['prix'] : 0;
-$rarete = mysqli_real_escape_string($db_handle, $_POST['rarete']);
-$type = mysqli_real_escape_string($db_handle, $_POST['type']);
-$typeAchat = mysqli_real_escape_string($db_handle, $_POST['typeAchat']);
-if($typeAchat === 'enchere'){
-    $dateFin = isset($_POST['dateFin']) ? $_POST['dateFin'] : null;
-    if($dateFin){
-        $dateTimeObject = new DateTime($dateFin);
-        $dateFinString = $dateTimeObject->format('Y-m-d H:i:s');
-    }else{
-        die("Probleme avec la date");
-    }
-}
 
-if (empty($nomA) || empty($type) || empty($prix) || empty($rarete)|| empty($desc) || empty($dateFin)) {
-    die("Information obligatoire manquante");
-}
-
-$check_sql = "SELECT ID FROM articles WHERE nom = '$nomA'";
+$check_sql = "SELECT ID FROM ".$_SESSION['user_table']." WHERE ID =". $_SESSION['user_id'];
 $result = mysqli_query($db_handle, $check_sql);
+$compte = [];
+if ($result) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        $compte = $row;
+    }
+} else {
+    die("Erreur lors de la récupération des info de votre compte : " . mysqli_error($db_handle));
+}
 
 if (mysqli_num_rows($result) > 0) {
-    die("Cet article existe deja.");
-}else{
-    $sql= "INSERT INTO `articles`(`nom`, `description`, `Type`, `prix`, `rarete`, `typeAchat`, `Photo`) VALUES ('$nomA','$desc','$type','$prix','$rarete','$typeAchat','$imagePath')";
-    mysqli_query($db_handle,$sql);
-    if($typeAchat == 'enchere'){
-        $sql = "SELECT `ID` FROM `articles` WHERE `nom`='".$nomA."'";
-        $result = mysqli_query($db_handle, $sql);
-        $article = [];
-        if ($result) {
-            while ($row = mysqli_fetch_assoc($result)) {
-                $article = $row;
-            }
-        } else {
-            die("Erreur lors de la récupération des info de votre article : " . mysqli_error($db_handle));
-        }
-        $sql = "INSERT INTO `enchere`(`id_article`, `dateFin`, `id_vendeur`, `valeur`) VALUES (".$article['ID'].", '".$dateFinString."', ".$_SESSION['user_id'].", ".$prix.")";
-        mysqli_query($db_handle, $sql);
-    }
-    echo $nomA . " enregistré dans la base de données avec succès.</br> <a href='parcourir.php'>Vers Agora</a> </br> <a href='nvArticle.html'>Poster un autre article</a>";
+    $sql = "UPDATE ".$_SESSION['user_table']." SET imageFond = '".$imagePath."' WHERE ".$_SESSION['user_table'].".`ID` = ".$compte['ID']."";
+    mysqli_query($db_handle, $sql);
+    echo "Fond d'écran mis à jour.";
+    //echo "<a class='change-bg-btn' href='compte.php'>Retour</a>";
+    echo '<script type="text/javascript">
+        window.location.href = "compte.php";
+      </script>';
     exit;
+}else{
+    die("Probleme");
 }
 
 mysqli_close($db_handle);

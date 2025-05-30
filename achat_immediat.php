@@ -140,7 +140,7 @@ $stmt->close();
             $stmt_delete = $db_handle->prepare("DELETE FROM articles WHERE ID = ?");
             $stmt_delete->bind_param("i", $article_id);
             if ($stmt_delete->execute()) {
-                echo "<p>Commande passée avec succès. L'article a été supprimé de la base de données.</p>";
+                echo "<p>Commande passée avec succès. L'article a été supprimé de la base de données. <a href='parcourir.php'>Découvrir d'autres articles</a></p>";
                 exit;
             } else {
                 echo "<p>Erreur lors de la suppression de l'article : " . $stmt_delete->error . "</p>";
