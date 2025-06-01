@@ -1,0 +1,95 @@
+<?php
+// Identifier le nom de base de données
+$database = "famille";
+
+// Connectez-vous à votre BDD
+// Rappel : votre serveur = localhost | votre login = root | votre mot de passe = '' (rien)
+$db_handle = mysqli_connect('localhost', 'root', '');
+$db_found = mysqli_select_db($db_handle, $database);
+
+$choice = isset($_POST["choix"])? $_POST["choix"] : ""; 
+if (empty($choice)) {
+	$choice = 0;
+}
+$choice = (int)$choice;
+
+	// A PARTIR DE LA, ON RECUP LES INFOS SUR CHAQUE MEMBRE
+$sql = "";
+
+if ($choice == 7){
+	$nom = isset($_POST["nom1"])?$_POST["nom1"]:"";
+	$prenom = isset($_POST["prenom1"])?$_POST["prenom1"]:""; 
+	$statut = isset($_POST["statut1"])?$_POST["statut1"]:"";
+	$naissance = isset($_POST["naissance1"])?$_POST["naissance1"]:"";
+	$photo = isset($_POST["photo1"])?$_POST["photo1"]:"";
+}
+
+if ($choice == 8){
+	$nom = isset($_POST["nom"])?$_POST["nom"]:"";
+	$prenom = isset($_POST["prenom"])?$_POST["prenom"]:""; 
+	$statut = isset($_POST["statut"])?$_POST["statut"]:"";
+	$naissance = isset($_POST["naissance"])?$_POST["naissance"]:"";
+	$photo = isset($_POST["photo"])?$_POST["photo"]:"";
+}
+
+//Si la BDD existe
+if ($db_found) {
+//code MySQL. $sql est basé sur le choix de l’utilisateur
+	switch ($choice) {
+		case 1:
+		$sql = "SELECT * FROM membre";
+		break;
+		case 2:
+		$sql = "SELECT * FROM membre ORDER BY Prenom";
+		break;
+		case 3:
+		$sql = "SELECT * FROM membre ORDER BY Prenom DESC";
+		break;
+		case 4:
+		$sql = "SELECT * FROM membre WHERE DateNaissance < '1960-01-01'";
+		break;
+		case 5:
+		$sql = "SELECT * FROM membre WHERE Prenom LIKE 'G%'";
+		break;
+		case 6:
+		$sql = "SELECT * FROM membre WHERE Prenom LIKE '%MA%'";
+		break;
+		case 7:
+		$sql = "";
+		break;
+		case 8:
+		$sql = "";
+		break;
+		default:
+		$sql = "SELECT * FROM membre";
+		break;
+	}
+//votre code ici
+}
+
+
+// Si la BDD existe, faire le traitement
+if ($db_found) {
+	$sql = "SELECT * FROM membre";
+    // $sql = "SELECT * FROM membre ORDER BY Prenom";
+    // $sql = "SELECT * FROM membre WHERE DateNaissance < '1960-01-01'";
+	$result = mysqli_query($db_handle, $sql);
+
+	while ($data = mysqli_fetch_assoc($result)) {
+		echo "ID: " . $data['ID'] . "<br>";
+		echo "Nom: " . $data['Nom'] . "<br>";
+		echo "Prénom: " . $data['Prenom'] . "<br>";
+		echo "Statut: " . $data['Statut'] . "<br>";
+		echo "Date de naissance: " . $data['DateNaissance'] . "<br>";
+		$image = $data['Photo'];
+		echo "<img src='$image' height='80' width='100'><br>";
+    } // end while
+
+} else {
+    // Si la BDD n'existe pas
+	echo "Database not found";
+} // end else
+
+// Fermer la connexion
+mysqli_close($db_handle);
+?>
