@@ -1,5 +1,9 @@
 <?php
 require_once 'redirect.php';
+if($_SESSION['user_table'] == 'client'){
+	echo "Reservé aux vendeurs. <a href='parcourir.php'>Retour</a>";
+	exit;
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -12,6 +16,7 @@ require_once 'redirect.php';
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="styleParcourir.css">
 </head>
 <body>
 <div class="header">
@@ -28,21 +33,72 @@ require_once 'redirect.php';
 		</ul>
 	</nav>
 	</div>
+<div style="display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;">
+<?php
+$db_handle = require __DIR__ . "/coDbb.php";
 
-<br>
 
-	<div class="footer">
-		<div class="footer-content">
-			<div class="footer-contact">
-				<h3>Contactez-nous</h3>
-				<p><strong>Email :</strong> <a href="mailto:louisedouard.lebeldepenguilly@edu.ece.fr">louisedouard.lebeldepenguilly@edu.ece.fr</a></p>
-				<p><strong>Téléphone :</strong> 06 15 91 39 05</p>
-				<p><strong>Adresse :</strong> 10 Rue Sextius-Michel, 75015 Paris</p>
-			</div>
-			<div class="footer-map">
-				<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d42007.61881544458!2d2.288582542327897!3d48.849129597134294!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e6701b4f581a8f%3A0xcc038371dc7bf603!2s10%20Rue%20Sextius%20Michel%2C%2075015%20Paris!5e0!3m2!1sfr!2sfr!4v1748276552561!5m2!1sfr!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-			</div>
-		</div>
-	</div>
+$sql = "SELECT * FROM `negociation` WHERE `id_vendeur`=".$_SESSION['user_id'];
+$result = mysqli_query($db_handle, $sql);
+
+$nego = [];
+if ($result) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        $nego[] = $row;
+    }
+} else {
+    die("Erreur lors de la récupération des articles : " . mysqli_error($db_handle));
+}
+foreach ($nego as $row) {
+    //echo $row['id_article'] . "<br>";
+	$id_article = $row['id_article'];
+	//echo $id_article."</br>";
+	$id_client = $row['id_client'];
+	//echo $id_client."</br>";
+	$offreClient = $row['offre'];
+	//echo $offreClient."</br>";
+	$offreFinale = $row['offreFinale'];
+	echo $offreFinale;
+
+	$sql = "SELECT * FROM `client` WHERE ID = ".$id_client;
+	$result = mysqli_query($db_handle, $sql);
+
+	$client = [];
+	if ($result) {
+		while ($r = mysqli_fetch_assoc($result)) {
+			$client[] = $r;
+		}
+	} else {
+		die("Erreur lors de la récupération des articles : " . mysqli_error($db_handle));
+	}
+	$pseudo = $client[0]['Pseudo'];
+
+    $sql = "SELECT * FROM articles WHERE ID = " . $id_article;
+    $result = mysqli_query($db_handle, $sql);
+
+    if ($result) {
+        while ($article = mysqli_fetch_assoc($result)) {
+            echo "<div class='carte'>";
+            echo "<img src='{$article['Photo']}' alt='Image de {$article['nom']}'>";
+            echo "<h3>{$article['nom']}</h3>";
+            echo "<p>{$article['description']}</p>";
+            echo "<p><strong>Valeur initiale: {$article['prix']} €</strong></p>";
+			echo "<p><strong>Offre du client: {$offreClient} €</strong></p>";
+			echo "<h3>Client: {$pseudo}</h3>";
+			if($offreFinale==0){
+				echo "<a href='negoVendeur.php?idarticle=".$id_article."&idclient=".$id_client."'>Négocier</a>";
+			}else{
+				echo "<p>Négociation terminée</p>";
+				echo "<p><strong>Prix de vente final: {$offreFinale} €</strong></p>";
+			}
+			echo "</div>";
+        }
+    } else {
+        echo "Erreur lors de la récupération de l'article avec l'ID $id_article : " . mysqli_error($db_handle) . "<br>";
+    }
+}
+mysqli_close($db_handle);
+?>
+</div>
 </body>
 </html>

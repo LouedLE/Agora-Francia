@@ -13,6 +13,10 @@ $sql = "SELECT * FROM articles WHERE ID = ".$article_id;
 $result = mysqli_query($db_handle, $sql);
 $article = [];
 
+if (mysqli_num_rows($result) == 0) {
+    die("Cette enchère est terminée. <a href='parcourir.php'>Retour</a>");
+}
+
 if ($result) {
     while ($row = mysqli_fetch_assoc($result)) {
         $article = $row;
@@ -20,6 +24,7 @@ if ($result) {
 } else {
     die("Erreur lors de la récupération des info de votre article : " . mysqli_error($db_handle));
 }
+
 
 $sql = "SELECT * FROM enchere WHERE id_article = ".$article_id;
 $result = mysqli_query($db_handle, $sql);
@@ -55,7 +60,7 @@ if ($result) {
         $client = $row;
     }
 } else {
-    die("Erreur lors de la récupération des info de votre vendeur : " . mysqli_error($db_handle));
+    die("Erreur lors de la récupération des info de votre client : " . mysqli_error($db_handle));
 }
 echo $enchere['dateFin'];
 $cloture = new DateTime($enchere['dateFin']);
@@ -64,7 +69,11 @@ echo "Date actuelle : " . $now->format('Y-m-d H:i:s') . "</br>";
 echo "Date de clôture : " . $cloture->format('Y-m-d H:i:s') . "</br>";
 if($now > $cloture){
 	echo "Fin des enchères pour cette article, merci de votre participation.</br>";
-	echo $client['Pseudo']." remporte un(e) ".$article['nom']." pour un montant de ".$enchere['offre']." €.</br>";
+	if(empty($client['Pseudo'])){
+		echo "Personne ne remporte l'enchère.";
+	}else{
+		echo $client['Pseudo']." remporte un(e) ".$article['nom']." pour un montant de ".$enchere['offre']." €.</br>";
+	}
 	$sql = "DELETE FROM `enchere` WHERE `enchere`.`id_article`=".$article_id;
 	$r = mysqli_query($db_handle, $sql);
 	if($r){
@@ -88,7 +97,7 @@ if($now > $cloture){
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Agora - espace perso</title>
+	<title>enchere</title>
 	<link rel="icon" href="images/logo.png" type="image/png">
 	<link rel="stylesheet" href="styles.css">
 	<link rel="stylesheet" href="styleProfil.css">

@@ -12,75 +12,7 @@ require_once 'redirect.php';
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	<title>Agora - parcourir</title>
 	<link rel="icon" href="images/logo.png" type="image/png">
-	<style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
-			background-image: url('images/agora.jpg');
-        }
-
-        h2 {
-            color: #333;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .ligne {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-        }
-
-        .carte {
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            padding: 15px;
-            width: 200px;
-            transition: transform 0.2s;
-        }
-
-        .carte:hover {
-            transform: scale(1.05);
-        }
-
-        .carte img {
-            width: 100%;
-            height: auto;
-            border-radius: 4px;
-        }
-
-        .carte h3 {
-            margin: 10px 0;
-            font-size: 16px;
-            color: #333;
-        }
-
-        .carte p {
-            margin: 5px 0;
-            font-size: 14px;
-            color: #666;
-        }
-
-        .carte a {
-            display: block;
-            background-color: #007bff;
-            color: white;
-            text-align: center;
-            padding: 8px;
-            border-radius: 4px;
-            margin-top: 10px;
-            text-decoration: none;
-        }
-
-        .carte a:hover {
-            background-color: #0056b3;
-        }
-    </style>
+	<link rel="stylesheet" href="styleParcourir.css">
 </head>
 <body>
 <div class="header">
@@ -134,7 +66,7 @@ foreach ($types as $rarete => $titre) {
             } elseif ($article['typeAchat'] === 'enchere') {
                 echo "<a href='enchere.php?id={$article['ID']}'>Faire une offre</a>";
             } elseif ($article['typeAchat'] === 'transaction') {
-                echo "<a href='negociation.php?id={$article['ID']}'>Négocier</a>";
+                echo "<a href='negoClient.php?id={$article['ID']}'>Négocier</a>";
             }
 
             echo "</div>";

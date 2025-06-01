@@ -12,8 +12,15 @@ require_once 'redirect.php';
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<style>
+		h2 {
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+	</style>
 </head>
-<body>
+<body style="background-image: url('images/agora.jpg');">
 	<div class="header">
 		<img src="images/logo.png" alt="logo" class="logo">
 		<h1>Agora Francia</h1>

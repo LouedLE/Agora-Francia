@@ -5,7 +5,7 @@ $db_handle = require __DIR__ . "/coDbb.php";
 $article_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 $offre = isset($_POST['encherir']) ? intval($_POST['encherir']) : 0;
 
-$sql = "SELECT offre FROM enchere WHERE id_article = ".$article_id;
+$sql = "SELECT offre, dateFin FROM enchere WHERE id_article = ".$article_id;
 $result = mysqli_query($db_handle, $sql);
 $enchere = [];
 
@@ -17,7 +17,12 @@ if ($result) {
     header("Location: enchere.php?id=".$article_id);
     exit;
 }
-
+$cloture = new DateTime($enchere['dateFin']);
+$now = new DateTime();
+if($now > $cloture){
+    header("Location: enchere.php?id=".$article_id);
+    exit;
+}
 
 if($offre < $enchere['offre']){
     header("Location: enchere.php?id=".$article_id);

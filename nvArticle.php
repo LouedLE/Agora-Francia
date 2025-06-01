@@ -75,7 +75,7 @@ if($typeAchat === 'enchere'){
     }
 }
 
-if (empty($nomA) || empty($type) || empty($prix) || empty($rarete)|| empty($desc) || empty($dateFin)) {
+if (empty($nomA) || empty($type) || empty($prix) || empty($rarete)|| empty($desc)) {
     die("Information obligatoire manquante");
 }
 
@@ -85,7 +85,7 @@ $result = mysqli_query($db_handle, $check_sql);
 if (mysqli_num_rows($result) > 0) {
     die("Cet article existe deja.");
 }else{
-    $sql= "INSERT INTO `articles`(`nom`, `description`, `Type`, `prix`, `rarete`, `typeAchat`, `Photo`) VALUES ('$nomA','$desc','$type','$prix','$rarete','$typeAchat','$imagePath')";
+    $sql= "INSERT INTO `articles`(`nom`, `description`, `Type`, `prix`, `rarete`, `typeAchat`, `Photo`, `id_vendeur`) VALUES ('$nomA','$desc','$type','$prix','$rarete','$typeAchat','$imagePath',".intval($_SESSION['user_id']).")";
     mysqli_query($db_handle,$sql);
     if($typeAchat == 'enchere'){
         $sql = "SELECT `ID` FROM `articles` WHERE `nom`='".$nomA."'";
